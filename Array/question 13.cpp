@@ -52,6 +52,8 @@ int main(){
         cout<<i+1<<" "<<j+1<<endl;
     }
 
+    // this is for testing 
+
     while(j<n){
 
         sum += a[j];
