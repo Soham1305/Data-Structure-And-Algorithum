@@ -1,4 +1,4 @@
-// declare 2 d array 
+// declare 2 D array 
 
 #include <iostream>
 #include <vector>
@@ -23,35 +23,33 @@
 
 using namespace std;
 
-const int N =2e2+5,MOD=1e9+7;
+const int N =1e2+5,MOD = 1e9+7;
 
 int n,m;
 
 int main(){
-    
+
     cin>>n>>m;
 
     vvi a(n,vi(m));
-    
 
-    rep(i,0,n){
+    for(int i=0;i<n;i++){
 
-        rep(j,0,m){
+        for(int j = 0;j<m ;j++){
 
-          cin>>a[i][j];
-           
+            cin>>a[i][j];
         }
     }
-   
-    cout<<"this is your 2 d array  : "<<endl;
 
-    rep(i,0,n){
+    for(int i=0;i<n;i++){
 
-        rep(j,0,m){
+        for(int j = 0;j<m ;j++){
 
             cout<<a[i][j]<<" ";
         }
         cout<<endl;
     }
+
     return 0;
+    
 }
