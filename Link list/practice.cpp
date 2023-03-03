@@ -21,169 +21,172 @@
 
 using namespace std;
 
-const int N =1e9+7;
+const int N =1e5+7 ;
 
 class node{
 
     public : 
+
     int data ;
+
     node* next ;
 
     node(int val){
 
-        data=val ;
+        data = val ;
 
-        next=NULL;
-
+        next = NULL;
     }
 };
 
-void insertattail(node* &head ,int val){
+void insetattail(node* &head , int val ){
 
     node* n = new node(val);
 
-    if( head == NULL){
+    if(head == NULL){
 
         head = n; 
-
         return ;
     }
 
-    node* temp=head ;
+    node* temp = head ;
 
     while(temp->next != NULL){
 
-        temp = temp->next;
+        temp = temp ->next ;
     }
 
-    temp->next=n;
-    
+    temp->next =n;
 }
 
-void display(node* &head){
+void display(node* &head ){
 
-    node* temp=head ;
+    node* temp = head ;
 
-    while(temp != NULL){
+    while( temp != NULL){
 
         cout<<temp->data<<" -< ";
 
-        temp=temp->next ;
+        temp = temp->next ;
+
     }
-    cout<<" NULL ";
 
-    cout<<endl;
-    
+    cout<<"NULL"<<endl;
 }
 
-node* deleteathead(node* &head){
+void deleteathed(node* &head ){
 
-    node* todelete = head ;
-    head=head->next ;
-    delete todelete ;
+    node* temp = head ;
+
+    head = head -> next ;
+
+    delete  temp;
 }
 
-node* deletion(node* &head , int val ){
+void deletion(node* &head,int val){
 
-    if( head == NULL || head -> next == NULL){
+    if(head->data ==  val){
 
-        delete head ;
+        deleteathed(head);
+        return ;
     }
 
     node* temp = head ;
 
     while(temp->next->data != val){
 
-        temp = temp -> next ;
+        temp = temp ->next ;
 
-    } 
+    }
+
     node* todelete=temp->next ;
+
     temp->next = temp->next->next ;
 
-    delete todelete ; 
+    delete todelete ;
+
 }
 
 node* reverse(node* &head){
 
-    node* prevptr=NULL;
+    if(head == NULL || head ->next == NULL){
+
+        return head ;
+    }
+
+    node* prevptr = NULL;
 
     node* currptr=head ;
 
     node* nextptr ;
 
-    while( currptr != NULL){
-        
-        nextptr= currptr->next ;
+    while(currptr != NULL){
+
+        nextptr = currptr->next ;
+
         currptr->next = prevptr ;
 
         prevptr = currptr ;
-        currptr=nextptr ;
-        
+
+        currptr = nextptr ;
     }
 
-    return prevptr ;
+    return prevptr; 
 }
 
-node* recersive(node* &head ){
-  
-if( head == NULL || head -> next == NULL){
+node* recersive(node* &head){
 
-    return head ; 
+    if( head == NULL || head -> next == NULL){
+
+        return head ;
+    }
+
+    node* newhead = recersive(head -> next );
+
+    head->next ->next = head ;
+
+    head -> next = NULL;
+
+    return newhead;
+
 }
 
-node* newhead=recersive(head->next);
-head -> next->next=head ;
-head->next = NULL ;
 
-return newhead ;
-
-}
 int main(){
 
     node* head = NULL;
 
-    insertattail(head,1);
-    insertattail(head,2);
-    insertattail(head,3);
-    insertattail(head,4);
-    insertattail(head,5);
-    insertattail(head,6);
-    insertattail(head,7);
+    insetattail(head ,1);
+    insetattail(head ,2);
+    insetattail(head ,3);
+    insetattail(head ,4);
+    insetattail(head ,5);
+    insetattail(head ,6);
+    insetattail(head ,7);
 
     display(head);
 
-    deletion(head,2);
+    deletion(head , 1);
 
     display(head);
 
-    deleteathead(head);
-
-    display(head);
-
-    node* newhead = NULL;
-
-    insertattail(newhead , 1);
-
-    deleteathead(newhead);
+    node* newhead = reverse(head);
 
     display(newhead);
 
-    node* newHead=reverse(head);
+    node* hello = NULL;
 
-    display(newHead);
+    insetattail(hello ,1 );
+    insetattail(hello,2 );
+    insetattail(hello ,3 );
+    insetattail(hello,4 );
+    insetattail(hello,5 );
+    insetattail(hello,6 );
+    insetattail(hello,7 );
 
-    node* hi=NULL;
+    node* Hi = recersive(hello);
 
-    insertattail(hi,1);
-    insertattail(hi,2);
-    insertattail(hi,3);
-    insertattail(hi,4);
-    insertattail(hi,5);
-    insertattail(hi,6);
+    display(Hi);
 
-    node* Mynewhead=recersive(hi);
-
-    display(Mynewhead);
-
-    return 0 ;
+    return 0;
 }
