@@ -21,7 +21,7 @@
 
 using namespace std;
 
-const int N =1e5+7 ;
+const int N = 1e9+7 ;
 
 class node{
 
@@ -39,154 +39,167 @@ class node{
     }
 };
 
-void insetattail(node* &head , int val ){
+void inseatattail(node* &head ,int val ){
 
     node* n = new node(val);
 
-    if(head == NULL){
+    if( head == NULL){
 
-        head = n; 
+        head = n;
         return ;
     }
 
     node* temp = head ;
 
-    while(temp->next != NULL){
+    while( temp ->next != NULL){
 
-        temp = temp ->next ;
+        temp = temp -> next ;
+
     }
 
-    temp->next =n;
+    temp ->next =n ;
 }
 
 void display(node* &head ){
 
     node* temp = head ;
 
-    while( temp != NULL){
+    while(temp != NULL){
 
-        cout<<temp->data<<" -< ";
-
+        cout<<temp->data<<" -> ";
         temp = temp->next ;
-
     }
 
     cout<<"NULL"<<endl;
 }
 
-void deleteathed(node* &head ){
+node* recercive(node* &head){
+
+    if(head ->next == NULL){
+
+        return head ;
+    }
+
+    node* prevptr=NULL;
+
+    node* currptr = head;
+
+    node* nextptr;
+
+    while(currptr != NULL){
+   
+    nextptr = currptr->next ;
+
+    currptr->next = prevptr ;
+
+    prevptr=currptr ;
+
+    currptr = nextptr ;
+
+    }
+
+    return prevptr;
+}
+
+
+void deleteathead(node* &head){
+
+    node* todelete=head; 
+
+    head = head->next;
+
+    delete todelete ;
+}
+
+void delettion(node* &head , int val){
 
     node* temp = head ;
 
-    head = head -> next ;
+    if(temp->data == val){
 
-    delete  temp;
-}
-
-void deletion(node* &head,int val){
-
-    if(head->data ==  val){
-
-        deleteathed(head);
+        deleteathead(head);
         return ;
     }
 
+    while( temp ->next->data != val){
+
+        temp= temp ->next ;
+    }
+    node* todelete=temp->next;
+
+    temp->next = temp ->next ->next ;
+
+    delete todelete;
+}
+
+bool search(node* &head ,int val){
+
     node* temp = head ;
 
-    while(temp->next->data != val){
+    if(head -> data == val){
 
-        temp = temp ->next ;
+        return true;
+    }
+    
 
+    while(temp != NULL){
+
+        if(temp->data == val){
+
+            return true;
+        }
+        temp=temp->next ;
     }
 
-    node* todelete=temp->next ;
-
-    temp->next = temp->next->next ;
-
-    delete todelete ;
-
+    return 0;
 }
 
-node* reverse(node* &head){
+void insertathead(node* &head ,int val ){
 
-    if(head == NULL || head ->next == NULL){
+    node* n= new node(val);
 
-        return head ;
-    }
+    n->next=head;
 
-    node* prevptr = NULL;
+    head = n ;
 
-    node* currptr=head ;
-
-    node* nextptr ;
-
-    while(currptr != NULL){
-
-        nextptr = currptr->next ;
-
-        currptr->next = prevptr ;
-
-        prevptr = currptr ;
-
-        currptr = nextptr ;
-    }
-
-    return prevptr; 
+    return ;
 }
-
-node* recersive(node* &head){
-
-    if( head == NULL || head -> next == NULL){
-
-        return head ;
-    }
-
-    node* newhead = recersive(head -> next );
-
-    head->next ->next = head ;
-
-    head -> next = NULL;
-
-    return newhead;
-
-}
-
 
 int main(){
 
     node* head = NULL;
 
-    insetattail(head ,1);
-    insetattail(head ,2);
-    insetattail(head ,3);
-    insetattail(head ,4);
-    insetattail(head ,5);
-    insetattail(head ,6);
-    insetattail(head ,7);
+    inseatattail(head,1);
+    inseatattail(head,2);
+    inseatattail(head,3);
+    inseatattail(head,4);
+    inseatattail(head,5);
+    inseatattail(head,6);
+    inseatattail(head,7);
 
     display(head);
 
-    deletion(head , 1);
-
-    display(head);
-
-    node* newhead = reverse(head);
+    node* newhead=recercive(head);
 
     display(newhead);
 
-    node* hello = NULL;
+    delettion(newhead,7);
 
-    insetattail(hello ,1 );
-    insetattail(hello,2 );
-    insetattail(hello ,3 );
-    insetattail(hello,4 );
-    insetattail(hello,5 );
-    insetattail(hello,6 );
-    insetattail(hello,7 );
+    display(newhead);
 
-    node* Hi = recersive(hello);
+    if(search(newhead,6)){
 
-    display(Hi);
+        cout<<"the node is inside of the linklist "<<endl;
+    }
+    else{
+
+        cout<<"this node is not inside in linklist"<<endl;
+    }
+
+    insertathead(newhead,7);
+
+    display(newhead);
+
 
     return 0;
 }
