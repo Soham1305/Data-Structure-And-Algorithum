@@ -1,3 +1,5 @@
+// floyed's algorithum for link list cycle detection 
+
 #include <iostream>
 #include <vector>
 #include <stack>    
@@ -21,7 +23,7 @@
 
 using namespace std;
 
-const int N = 1e9+7 ;
+const int N  =1e5+7 ;
 
 class node{
 
@@ -165,82 +167,76 @@ void insertathead(node* &head ,int val ){
     return ;
 }
 
-node* reverseknode(node* &head , int n ){
+void makecycle(node* &head ,int position ){
 
-    int val = 0 ;
+    node* temp = head ;
 
-    node* prevptr = NULL;
+    node* supernode;
 
-    node* currptr = head ;
+    int count = 0 ;
 
-    node* nextptr ;
+    while(temp->next != NULL){
 
-    while(val<n && currptr != NULL){
+    if(count == position ){
+       
+       supernode=temp ;
+      
+    }
+    temp = temp -> next ;
 
-        nextptr= currptr ->next ;
-
-        currptr ->next = prevptr ;
-
-        prevptr = currptr ;
-
-        currptr = nextptr ;
-
-        val++ ;
-
+    count ++ ;
     }
 
-    if( nextptr != NULL){
+    temp->next = supernode ;
+    return ;
+}
 
-        head -> next = reverseknode(nextptr,n);
+bool detect(node* &head ){
+
+    node* slow ;
+    node* fast ;
+
+    while( slow != NULL && fast != NULL){
+
+        slow = slow -> next ;
+
+        fast = fast ->next -> next ;
+
+        if( slow == fast ){
+
+            return true ;
+        }
     }
 
-    return prevptr ;
+    return false ;
+}
+
+node* cycledelete(node* &head ){
+
 }
 
 int main(){
 
-    int k ;
-    
-    cin>>k ;
-
     node* head = NULL;
 
-    inseatattail(head,1);
-    inseatattail(head,2);
-    inseatattail(head,3);
-    inseatattail(head,4);
-    inseatattail(head,5);
-    inseatattail(head,6);
-    inseatattail(head,7);
+    inseatattail(head , 1 );
+    inseatattail(head , 2 );
+    inseatattail(head , 3 );
+    inseatattail(head , 4 );
+    inseatattail(head , 5 );
+    inseatattail(head , 6 );
+    inseatattail(head , 7 );
 
     display(head);
 
-    node* newhead=recercive(head);
+    makecycle(head,4);
 
-    display(newhead);
+    if(detect(head)){
 
-    delettion(newhead,7);
-
-    display(newhead);
-
-    if(search(newhead,6)){
-
-        cout<<"the node is inside of the linklist "<<endl;
-    }
-    else{
-
-        cout<<"this node is not inside in linklist"<<endl;
+        cout<<"the cycle is present in  this perticular link list "<<endl;
+    }else{
+        cout<<"there is no cycle is present in this perticular link list "<<endl;
     }
 
-    insertathead(newhead,7);
-
-    display(newhead);
-
-    cout<<" the reverse k node be look like this : "<<endl;
-
-    node* head1 = reverseknode(newhead,2);
-
-    display(head1);
-
-    return 0;
+    return 0 ;
 }
