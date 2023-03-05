@@ -165,33 +165,33 @@ void insertathead(node* &head ,int val ){
     return ;
 }
 
-node* reverseknode(node* &head , int n ){
 
-    int val = 0 ;
+node* reverseknode2(node* &head , int val){
 
-    node* prevptr = NULL;
+    node* prevptr=NULL;
+    node* nextptr ;
+
+    int count=0;
 
     node* currptr = head ;
 
-    node* nextptr ;
+    while(currptr != NULL && count<val ){
 
-    while(val<n && currptr != NULL){
+        nextptr=currptr -> next ;
 
-        nextptr= currptr ->next ;
+        currptr->next = prevptr ;
 
-        currptr ->next = prevptr ;
+        prevptr= currptr ;
 
-        prevptr = currptr ;
+        currptr= nextptr ;
 
-        currptr = nextptr ;
-
-        val++ ;
+        count ++; 
 
     }
 
-    if( nextptr != NULL){
+    if(nextptr!=NULL){
 
-        head -> next = reverseknode(nextptr,n);
+        head->next=reverseknode2(nextptr,val);
     }
 
     return prevptr ;
@@ -238,7 +238,7 @@ int main(){
 
     cout<<" the reverse k node be look like this : "<<endl;
 
-    node* head1 = reverseknode(newhead,2);
+    node* head1 = reverseknode2(newhead,2);
 
     display(head1);
 
