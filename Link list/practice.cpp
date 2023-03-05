@@ -300,6 +300,53 @@ void doublyDeletation(node2* &head , int val){
     return ;
 }
 
+int sizeofLL(node* &head ){
+
+    node* temp= head ;
+
+    int count =  0 ;
+
+    while(temp != NULL){
+
+        count ++ ;
+        temp = temp ->next ;
+    }
+
+    return count ;
+}
+
+node* appendknode(node* &head,int k ){
+
+    int n ;n= sizeofLL(head);
+
+    node* tail = head ;
+
+    node* newtail;
+
+    node* newhead ;
+
+    int count = 1; 
+
+    while(tail->next != NULL){
+
+      if(count == n-k){
+
+        newtail = tail->next;
+
+        newhead=newtail->next ;
+      }
+
+      tail = tail->next ;
+      
+      count ++ ;
+    }
+    newtail ->next  = NULL;
+
+    tail->next =head ;
+
+    return newhead ;
+}
+
 int main(){
 
     int k ;
@@ -370,6 +417,32 @@ int main(){
     cout<<"deletion of doubly link list head"<<endl;
 
     displayDLL(head2);
+
+    //append last k node  ;
+
+    node* head3 = NULL ;
+
+    inseatattail(head3 , 1);
+    inseatattail(head3 , 2);
+    inseatattail(head3 , 3);
+    inseatattail(head3 , 4);
+    inseatattail(head3 , 5);
+    inseatattail(head3 , 6);
+    inseatattail(head3 , 7);
+    inseatattail(head3 , 8);
+
+    cout<<"appennd k node "<<endl;
+
+    cout<<"Link list : "<<endl;
+
+    display(head3);
+
+
+    node* head4 = appendknode(head3,k);
+   
+    cout<<"Append Link List "<<endl;
+
+    display(head4);
 
     return 0;
 }
