@@ -197,6 +197,109 @@ node* reverseknode2(node* &head , int val){
     return prevptr ;
 }
 
+class node2{
+
+    public:
+
+    int data1 ;
+    node2* nextp;
+
+    node2* prevp;
+
+    node2(int val){
+
+        data1= val ;
+
+        nextp= NULL;
+
+        prevp= NULL;
+    }
+};
+
+void  insearatheadinDLL(node2* &head, int val){
+ 
+ node2* n = new node2(val);
+
+ n->nextp = head ;
+
+ if( head != NULL ){
+
+   head->prevp=n ;
+ }
+
+ head = n;
+ return ;
+
+}
+
+void inseratdoublyeLL(node2* &head , int val){
+
+    if(head == NULL){
+
+        insearatheadinDLL(head , val);
+        return ;
+    }
+
+    node2* n =new node2(val);
+
+    node2* temp = head ;
+
+    while(temp -> nextp != NULL){
+
+        temp = temp->nextp;
+    }
+
+    temp->nextp=n;
+    n->prevp=temp ;
+}
+
+void displayDLL(node2* &head){
+
+    node2* temp = head ;
+
+    while(temp != NULL){
+
+        cout<<temp->data1<<" -< ";
+        
+        temp = temp -> nextp ;
+    }
+    cout<<"NULL"<<endl;
+    return ;
+}
+
+void doublyheadDElete(node2* &head){
+
+    node2* todelete = head ;
+
+    head = head->nextp;
+    head->prevp=NULL;
+
+    delete todelete;
+}
+
+void doublyDeletation(node2* &head , int val){
+
+    if(head == NULL){
+
+        cout<<"sale kuch to pahele add kar le link list me "<<endl;
+    }
+
+    node2* temp = head ;
+
+    while(temp -> nextp->data1 != val){
+
+    temp = temp ->nextp;
+    }
+    node2* todelete=temp->nextp;
+
+    temp->nextp=temp->nextp->nextp;
+    temp->nextp->prevp=temp->nextp->prevp->prevp;
+
+    delete todelete;
+
+    return ;
+}
+
 int main(){
 
     int k ;
@@ -241,6 +344,32 @@ int main(){
     node* head1 = reverseknode2(newhead,2);
 
     display(head1);
+
+    node2* head2 = NULL;
+
+    inseratdoublyeLL(head2 , 1);
+    inseratdoublyeLL(head2 , 2);
+    inseratdoublyeLL(head2 , 3);
+    inseratdoublyeLL(head2 , 4);
+    inseratdoublyeLL(head2 , 5);
+    inseratdoublyeLL(head2 , 6);
+    inseratdoublyeLL(head2 , 7);
+    
+    cout<<" your doubly link list goes like this : "<<endl;
+
+    displayDLL(head2);
+
+    doublyDeletation(head2,2);
+
+    cout<<"deletation in doubly link list "<<endl;
+
+    displayDLL(head2);
+
+    doublyheadDElete(head2);
+
+    cout<<"deletion of doubly link list head"<<endl;
+
+    displayDLL(head2);
 
     return 0;
 }
