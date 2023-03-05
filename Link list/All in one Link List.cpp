@@ -218,6 +218,23 @@ class node2{
     }
 };
 
+node* recersive(node* &head){
+
+    if(head == NULL || head ->next == NULL){
+        
+        return head ;
+
+    }
+
+    node* newhead = recersive(head->next);
+
+    head->next->next = head ;
+
+    head->next = NULL ;
+
+    return newhead ;
+}
+
 void  insearatheadinDLL(node2* &head, int val){
  
  node2* n = new node2(val);
@@ -433,18 +450,33 @@ int main(){
     inseatattail(head3 , 7);
     inseatattail(head3 , 8);
 
+    node* head5=recersive(head3);
+
+    display(head5);
+
+    node* head7 = NULL ;
+
+    inseatattail(head7 , 1);
+    inseatattail(head7 , 2);
+    inseatattail(head7 , 3);
+    inseatattail(head7 , 4);
+    inseatattail(head7 , 5);
+    inseatattail(head7 , 6);
+    inseatattail(head7 , 7);
+    inseatattail(head7 , 8);
+
     cout<<"appennd k node "<<endl;
 
     cout<<"Link list : "<<endl;
 
-    display(head3);
+    display(head7);
 
 
-    node* head4 = appendknode(head3,k);
+    node* head10 = appendknode(head7,k);
    
     cout<<"Append Link List "<<endl;
 
-    display(head4);
+    display(head10);
 
     return 0;
 }
