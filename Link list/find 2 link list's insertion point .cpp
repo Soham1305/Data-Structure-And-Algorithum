@@ -110,33 +110,94 @@ void deletation(node* &head , int val){
     delete todelete;
 }
 
+int lenthofLL(node* &head){
+
+    int count = 1;
+
+    node* temp = head ;
+
+    while(temp -> next != NULL){
+
+        count ++ ;
+
+        temp = temp -> next ;
+    }
+
+    return count ;
+}
+
 void makeinsertion(node* &head1, node* head2,int pos ){
 
-    node* temp1=head1;
-    
-    node* temp2=head2 ;
+    node* temp1 = head1 ;
 
-    node* intersact;
+    node* temp2 = head2 ;
 
-    int count = 0 ;
+    while(pos--){
 
-    while(count <= pos){
-        
-        if(count == pos){
-
-            intersact = temp1;
-        }
         temp1= temp1->next ;
-        count++ ;
     }
 
     while(temp2->next != NULL){
-     
-     temp2 =temp2->next ;
+
+        temp2= temp2->next ;
     }
 
-    temp2->next = intersact; 
+    temp2->next = temp1;
 
+}
+
+int intersactpoint(node* &head1 , node* &head2){
+
+    int l = lenthofLL(head1);
+
+    int r = lenthofLL(head2);
+
+    int d ;
+
+    node* temp1 ;
+
+    node* temp2 ;
+
+    if(l>r){
+     
+      temp1 = head1 ;
+
+      temp2 =head2 ;
+
+     d=l-r;
+        
+    }else{
+    
+      temp1=head2;
+
+      temp2=head1;
+
+      d=r-l;
+
+    }
+
+    while(d){
+
+        temp1=temp1->next ;
+
+        if(temp1 == NULL){
+
+            return -1 ;
+        }
+        d--;
+    }
+
+    while(temp1 != NULL && temp2 != NULL){
+
+        if(temp1 == temp2){
+
+            return temp1->data;
+        }
+        temp1=temp1->next ;
+        temp2=temp2->next ;
+    }
+
+    return -1;
 }
 
 int main(){
@@ -163,15 +224,21 @@ int main(){
 
     for(int i =0 ;i<n1;i++){
 
-        insertattail(head1 , i);
+        insertattail(head1 , a[i]);
     }
     for(int i =0 ;i<n2;i++){
 
-        insertattail(head2 , i);
+        insertattail(head2 , b[i]);
     }
 
     makeinsertion(head1,head2,4);
 
+    display(head1);
+
+    display(head2);
     
+    cout<<intersactpoint(head1,head2)<<endl;
+
+    return 0;
 
 }
