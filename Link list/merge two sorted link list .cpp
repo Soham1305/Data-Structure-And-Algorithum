@@ -106,14 +106,14 @@ node* newL(node* &head1, node* head2){
    node* ptr2=head2;
    node* ptr3=n;
 
-   while(ptr1 -> next != NULL && ptr2 -> next != NULL){
+   while(ptr1  != NULL && ptr2  != NULL){
 
-    if(ptr1->data > ptr2->data){
+    if(ptr1->data < ptr2->data){
 
         ptr3->next=ptr1;
         ptr1=ptr1->next ;
     }
-    if(ptr2->data > ptr1->data){
+    else{
 
         ptr3->next=ptr2;
         ptr2=ptr2->next ;
@@ -122,8 +122,49 @@ node* newL(node* &head1, node* head2){
     ptr3 = ptr3->next ;
    }
 
-   return n;
+   while(ptr1  != NULL){
 
+    ptr3->next = ptr1;
+    ptr3=ptr3->next ;
+    ptr1=ptr1->next ;
+   }
+   while(ptr2  != NULL){
+
+    ptr3->next = ptr2;
+    ptr3=ptr3->next ;
+    ptr2=ptr2->next;
+   }
+
+   return n->next;
+
+}
+
+node* recersivemerge(node* &head1,node* &head2){
+
+    if(head1 == NULL){
+
+        return head2;
+    }
+
+    if(head2 == NULL){
+
+        return head1;
+    }
+
+    node* result ;
+
+    if(head1->data < head2->data){
+   
+    result=head1;
+    result->next=recersivemerge(head1->next,head2);
+
+    }else{
+
+        result=head2;
+        result->next=recersivemerge(head1,head2->next);
+    }
+
+    return result;
 }
 
 int main(){
@@ -152,14 +193,22 @@ int main(){
        insertattail(head1,a[i]);
     }
 
-    for(int i = 0;i<n;i++){
+    for(int i = 0;i<m;i++){
 
        insertattail(head2,b[i]);
     }
 
-    node* newlist=newL(head1,head2);
+    display(head1);
 
-    display(newlist);
+    display(head2);
+
+   // node* newlist=newL(head1,head2);
+
+    //display(newlist);
+
+    node* LL =recersivemerge(head1,head2);
+
+    display(LL);
 
     return 0;
 }

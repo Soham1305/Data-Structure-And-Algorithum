@@ -366,6 +366,131 @@ node* appendknode(node* &head,int k ){
     return newhead ;
 }
 
+node* mergeLL(node* &head1,node* &head2){
+
+    node* dummynode= new node(-1);
+
+    node* p1= head1 ;
+
+    node* p2= head2 ;
+
+    node* p3= dummynode;
+
+    while(p1 != NULL && p2 != NULL){
+
+        if(p1->data < p2->data){
+
+            p3->next =p1 ;
+            p1= p1->next;
+        }else{
+
+            p3->next= p2;
+            p2=p2->next ;
+        }
+        p3= p3->next ;
+    }
+    while(p1 != NULL){
+
+        p3->next = p1;
+        p1=p1->next ;
+        p3=p3->next ;
+    }
+    while(p2 != NULL){
+
+        p3->next = p2;
+        p2=p2->next ;
+        p3=p3->next ;
+    }
+
+    return dummynode->next;
+}
+
+node* recersivemegeLL(node* &head1 , node* &head2){
+
+    if(head1==NULL){
+
+        return head2;
+    }
+    if(head2==NULL){
+
+        return head1;
+    }
+
+    node* result ;
+
+    if(head1->data< head2->data){
+
+    result = head1; 
+    result ->next = recersivemegeLL(head1->next,head2);
+    }
+    else{
+
+    result = head2; 
+    result ->next = recersivemegeLL( head1 , head2->next );
+    }
+
+    return result ;
+}
+
+void makinginsersion(node* &head1,node* &head2,int pos){
+
+node* temp1= head1 ;
+
+node* temp2 = head2 ;
+
+while(pos != 0){
+    temp1= temp1->next ;
+    pos--;
+}
+while(temp2->next != NULL){
+
+    temp2 =temp2->next ;
+}
+temp2->next = temp1;
+return ;
+}
+
+int findpoint(node* &head1 , node* &head2){
+int d ;
+int count = 1;
+
+int l=sizeofLL(head1);
+int r=sizeofLL(head2);
+
+node* temp1;
+node* temp2;
+
+if(l>r){
+
+    d=l-r;
+    temp1=head1;
+    temp2=head2;
+}
+else{
+
+    d=r-l;
+    temp1=head2;
+    temp2=head1;
+}
+while(d){
+    temp1=temp1->next ;
+    if(temp1 == NULL){
+        
+        return -1;
+    }
+    d--;
+}
+while(temp1 != NULL && temp2 != NULL ){
+
+  if(temp1== temp2){
+    return temp1->data;
+  }
+   temp1=temp1->next ;
+   temp2=temp2->next ;
+}
+return -1;
+}
+ 
 int main(){
 
     int k ;
@@ -477,6 +602,88 @@ int main(){
     cout<<"Append Link List "<<endl;
 
     display(head10);
+
+    int n,m;
+
+    cin>>n>>m;
+
+    node* head11= NULL ;
+
+    node* head12= NULL;
+
+    int a[n],b[m];
+
+    for(int i =0;i<n;i++){
+
+        cin>>a[i];
+    }
+    for(int i =0;i<m;i++){
+
+        cin>>b[i];
+    }
+
+    for(int i= 0;i<n;i++){
+
+        inseatattail(head11,a[i]);
+    }
+    for(int i= 0;i<m;i++){
+
+        inseatattail(head12,b[i]);
+    }
+
+    cout<<"Merge two sorted link list : "<<endl;
+
+    display(head11);
+
+    display(head12);
+
+    //node* head13=mergeLL(head11,head12);
+
+    node* head14=recersivemegeLL(head11, head12);
+
+    display(head14);
+    
+    cout<<"Find Two link list intersaction point : "<<endl;
+
+    node* head15=NULL;
+
+    node* head16= NULL;
+
+    int n1,m1;
+
+    cin>>n1>>m1;
+
+    int c[n1];
+
+    int d[m1];
+
+    for(int i= 0 ;i<n1;i++){
+
+        cin>>c[i];
+    }
+    for(int i= 0 ;i<m1;i++){
+
+        cin>>d[i];
+    }
+
+    for(int i = 0 ;i<n1;i++){
+        
+        inseatattail(head15,c[i]);
+    }
+    for(int i = 0 ;i<m1;i++){
+        
+        inseatattail(head16,d[i]);
+    }
+
+    display(head15);
+    display(head16);
+
+    makinginsersion(head15,head16,4);
+
+    display(head15);
+    display(head16);
+
+    cout<<" the intersacting point is : "<<findpoint(head15,head16)<<endl;
 
     return 0;
 }
